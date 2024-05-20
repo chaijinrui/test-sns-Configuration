@@ -24,7 +24,7 @@ public class GlobalDimensionConfiguration {
     }
 
 
-//    测试代码
+    //    测试代码
     public static void main(String[] args) {
         System.out.println(new GlobalDimensionConfiguration().addGlobalDimensionConfiguration("7059DEB20FA927661A5FEA9AE7095396.jvm1", "src/main/resources/addGlobal.json"));
     }
