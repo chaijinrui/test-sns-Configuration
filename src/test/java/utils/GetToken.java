@@ -1,5 +1,8 @@
 package utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,6 +16,7 @@ import java.util.Objects;
 
 public class GetToken {
     private static final String urlStr = "http://cms.cyngame.cn:8190/login/login.action?UserName=sns_cjr&PassWord=123456";
+    private static final Logger log = LogManager.getLogger(GetToken.class);
     public static String token;
 
 
@@ -28,8 +32,7 @@ public class GetToken {
 
         // 发送请求
         int responseCode = connection.getResponseCode();
-        System.out.println("Response Code : " + responseCode);
-
+        log.info("Response Code : " + responseCode);
         // 获取所有响应头
         Map<String, List<String>> headerFields = connection.getHeaderFields();
         for (Map.Entry<String, List<String>> entry : headerFields.entrySet()) {
@@ -43,7 +46,8 @@ public class GetToken {
         connection.disconnect();
 
 //        从header中拿到JSESSIONID
-        token = token.substring(token.indexOf("=") + 1, token.indexOf(";"));
+        token = "JSESSIONID=" + token.substring(token.indexOf("=") + 1, token.indexOf(";"));
+        log.info("token: " + token);
         return token;
     }
 }
