@@ -1,0 +1,7 @@
+{
+  "cp_id": 9483,
+  "app_id": 5717,
+  "sdk_code": 3018,
+  "actions": "advertScriptById",
+  "url": "http://47.92.153.231:8060/sdk/api/init/admin/setup"
+}

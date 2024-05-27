@@ -3,6 +3,7 @@ package services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import utils.GetToken;
+import utils.JsonFileKeyExtractor;
 import utils.JsonToPostParams;
 import utils.RequestUtil;
 
@@ -23,6 +24,8 @@ public class GlobalDimensionConfiguration {
     //  新增、修改配置接口
     private String addGlobalDimensionConfigurationUrl = "http://cms.cyngame.cn:8190/initAction/initLoadTable.action?" +
             "actions=addAdvertCommonConfigValues&methodName=AdvertJoinSDK_ReCreate&formValue=";
+//    private String lookGlobalDimensionConfigurationUrl = "http://cms.cyngame.cn:8190/initAction/initLoadTable.action?" +
+//            "actions=getAdvertCommonConfigValues&methodName=AdvertJoinSDK_ReCreate&formValue=";
 
 
     // 1. 新增
@@ -38,33 +41,48 @@ public class GlobalDimensionConfiguration {
     public String addGlobalDimensionConfiguration(String token, String jsonFilePath) {
         try {
 //            编码后的url
-            addGlobalDimensionConfigurationUrl = addGlobalDimensionConfigurationUrl + URLEncoder.encode("{" + JsonToPostParams.jsonFileToPostParams("src/test/resources/addGlobal1.json") + "}", "UTF-8");
-            log.info("配置:" + JsonToPostParams.jsonFileToPostParams("src/test/resources/addGlobal1.json"));
-//            log.info(addGlobalDimensionConfigurationUrl);
+            addGlobalDimensionConfigurationUrl = addGlobalDimensionConfigurationUrl + URLEncoder.encode("{" + JsonToPostParams.jsonFileToPostParams(jsonFilePath) + "}", "UTF-8");
+            log.info("配置:" + JsonToPostParams.jsonFileToPostParams(jsonFilePath));
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
 //调用请求方法
         return RequestUtil.getRequest(addGlobalDimensionConfigurationUrl, token);
     }
-
-
-    // 2. 修改
-
-    /**
-     * @param token
-     * @param jsonFilePath 同新增接口参数
-     * @return
-     */
-    //TODO
-    public String changeGlobalDimensionConfiguration(String token, String jsonFilePath) {
-
-    }
-
-
-    //    测试代码
-    public static void main(String[] args) throws IOException {
-        log.info("responseBody:" +
-                new GlobalDimensionConfiguration().addGlobalDimensionConfiguration(GetToken.getToken(), "src/main/resources/addGlobal1.json"));
-    }
 }
+
+
+//    // 2. 修改
+//
+//    /**
+//     * @param token
+//     * @param jsonFilePath 同新增接口参数
+//     * @return
+//     */
+//
+//    public String changeGlobalDimensionConfiguration(String token, String jsonFilePath) {
+//        try {
+////获取key对应的value，用于之后查询cid
+//            String value = JsonFileKeyExtractor.getValueFromJsonFile(jsonFilePath, "key");
+////            请求接口查询cid
+//            lookGlobalDimensionConfigurationUrl = lookGlobalDimensionConfigurationUrl + URLEncoder.encode("{" + JsonToPostParams.jsonFileToPostParams(jsonFilePath) + "}", "UTF-8");
+//            log.info("asId+{}", JsonToPostParams.jsonFileToPostParams(jsonFilePath));
+//            log.info("lookGlobalDimensionConfigurationUrl=" + lookGlobalDimensionConfigurationUrl);
+////            编码后的url
+//            addGlobalDimensionConfigurationUrl = addGlobalDimensionConfigurationUrl + URLEncoder.encode("{" + JsonToPostParams.jsonFileToPostParams(jsonFilePath) + "}", "UTF-8");
+//            log.info("配置:" + JsonToPostParams.jsonFileToPostParams(jsonFilePath));
+//        } catch (UnsupportedEncodingException e) {
+//            throw new RuntimeException(e);
+//        }
+////调用请求方法
+//        return RequestUtil.getRequest(addGlobalDimensionConfigurationUrl, token);
+//    }
+//}
+
+
+//    //    测试代码
+//    public static void main(String[] args) throws IOException {
+//        log.info("responseBody:" +
+//                new GlobalDimensionConfiguration().addGlobalDimensionConfiguration(GetToken.getToken(), "src/main/resources/addGlobal1.json"));
+//    }
+//}
